@@ -33,7 +33,6 @@ def ImgAssemble_1(data):
     img.putdata(data[64:])
     img.show()
 
-    
 
 src = Image.open("./Test/test.png").convert("1")
 data = ImgDecompose_1(src)
