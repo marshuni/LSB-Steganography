@@ -1,21 +1,21 @@
 import numpy as np
 from PIL import Image,ImageChops
 
-
-def ImgEncrypt(img_src,seed):
+# 由于PIL库的局限性，进行异或操作的图像必须是二值化图像，不能够进行按位异或。
+# 或许可以先在numpy的array形势下异或完再转换成图像？
+def ImgEncrypt_xor_1(img_src,seed):
     img = img_src.convert("1")
     img_arr = np.array(img)
     w,h = img_arr.shape
 
     np.random.seed(seed)
     key=np.random.randint(0,256,size=[w,h],dtype=np.uint8)
-    Image.fromarray(key).show()
     keyimg = Image.fromarray(key).convert("1")
 
     img_encrypt = ImageChops.logical_xor(img,keyimg)
     return img_encrypt
 
-def ImgDecrypt(img_encrypt,seed):
+def ImgDecrypt_xor_1(img_encrypt,seed):
     img_encrypt = img_encrypt.convert("1")
     img_arr = np.array(img_encrypt)
     w,h = img_arr.shape
@@ -28,12 +28,13 @@ def ImgDecrypt(img_encrypt,seed):
     return img_decrypt
 
 
-img_path = r"./test.png"
+
+
+img_path = r"./Test/txt2pic.png"
 img = Image.open(img_path).convert("1")
 
-img_encrypt = ImgEncrypt(img,1024)
-img_encrypt.show()
-img_encrypt.save("encrypt.png")
+img_encrypt = ImgEncrypt_xor_1(img,1024)
+img_encrypt.save("./Test/XorEncrypt_1.png")
 
-img_decrypt = ImgDecrypt(img_encrypt,1024)
-img_decrypt.show()
+img_decrypt = ImgDecrypt_xor_1(img_encrypt,1024)
+img_decrypt.save("./Test/XorDecrypt_1.png")
