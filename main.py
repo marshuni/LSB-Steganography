@@ -45,7 +45,7 @@ def extract(steg_file,output_file,mode,seed):
     seed = int(seed)
     steg_img = Image.open(steg_file).convert("RGBA")
     payload_data = LSBSteganoser().Extract(steg_img)
-    payload_encrypt = Converter().ImgAssemble(payload_data,mode)
+    payload_encrypt = Converter().ImgAssemble(payload_data,mode,steg_img.size)
     payload_img = XorImgCrypter().ImgDecrypt(payload_encrypt,seed,mode)
 
     payload_img.save(output_file)

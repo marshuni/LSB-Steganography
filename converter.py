@@ -12,7 +12,7 @@ class Converter:
         margin = 10 if width>64 else 2
 
         size = 14
-        for siz in [8,9,10,12,14,16,20,22,24,26,28,36,48,72,144]:
+        for siz in [8,9,10,12,14,16,20,22,24,26,28,36,48,72,144,180,288,300,360,480]:
             column = (width-margin*2)/siz
             line = len(raw)/column + len(sections)
             if line*(siz+4)<height:
@@ -26,7 +26,7 @@ class Converter:
         draw = ImageDraw.Draw(image)
         # Available Font：Simsun.ttc / YaHeiConsolas.ttf
         # Put your own font file into ./Fonts/ 
-        font = ImageFont.truetype("./Fonts/Simsun.ttc", size)
+        font = ImageFont.truetype("./Fonts/YaHeiConsolas.ttf", size)
 
         draw.multiline_text((margin, margin/2), text, font=font, fill="#000000",spacing=4)
         return image
@@ -45,7 +45,7 @@ class Converter:
             data += [int(bool(b)) for b in img.convert("1").getdata()]
         return data
 
-    def ImgAssemble(self,data,mode):
+    def ImgAssemble(self,data,mode,steg_size):
         size = b""
         size_bytes = data[:64]
         
@@ -57,9 +57,9 @@ class Converter:
             size = size + chr(byte).encode('latin-1')
         width,height = struct.unpack("i",size[:4])[0],struct.unpack("i",size[4:8])[0]
 
-        if width>8192 or height>8192:
-            print("[-] Fatal error: File corrupted.")
-            sys.exit()
+        if not 0<width<8192 or not 0<height<8192:
+            print("[-] File corrupted.Trying to restore.")
+            width,height = steg_size
         img = Image.new("L",(width,height))
 
         if mode == "L":
