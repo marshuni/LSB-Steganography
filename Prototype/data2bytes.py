@@ -26,7 +26,6 @@ def ImgAssemble_1(data):
         for i in range(0,8):
             byte = (byte<<1) + size_bytes[idx*8+i]
         size += chr(byte).encode()
-
     width,height = struct.unpack("i",size[:4])[0],struct.unpack("i",size[4:8])[0]
     
     img = Image.new("1",(width,height))

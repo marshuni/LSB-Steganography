@@ -9,8 +9,7 @@ class LSBSteganoser:
         if value:
             var |= mask
         return var
-    def Embed(self,imgFile,payload):
-        src_img = Image.open(imgFile).convert("RGBA")
+    def Embed(self,src_img,payload):
         width,height = src_img.size
 
         max_size = width*height*3.0/1024
@@ -46,8 +45,7 @@ class LSBSteganoser:
         print ("[+] Embedded successfully!")
         return steg_img
     
-    def Extract(self,imgFile):
-        src_img = Image.open(imgFile).convert("RGBA")
+    def Extract(self,src_img):
         width,height = src_img.size
         print ("[*] Input image size: %dx%d pixels." % (width, height))
 
@@ -58,4 +56,5 @@ class LSBSteganoser:
                 data.append(r & 1)
                 data.append(g & 1)
                 data.append(b & 1)
+        print ("[+] Extracted successfully!")
         return data
