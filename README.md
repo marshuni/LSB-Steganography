@@ -13,9 +13,12 @@ LSB隐写脚本：该脚本可以将图片或文字隐藏入载体图像的最�
 - 被隐写图像的宽高信息编码后存储在载体图像的头部，若图像头部被修改，或图象被整体修改(如调整亮度、对比度)，则信息无法读取。
 - 无法保证信息的绝对安全。在知晓算法的情况下，使用穷举法枚举随机数种子可能破译出信息。
 
-## 功能介绍
+## 备注
+该项目为Python程序设计课程的学期大作业项目，代码和程序设计结构均为原创。如果这个项目对您有帮助，不妨在右上角点个Star! XD
 
-### hide - 将信息隐藏入图片
+# 功能介绍
+
+## hide - 将信息隐藏入图片
 
 ```shell
 python main.py hide <img_file> <payload_file> <mode> <seed>
@@ -28,7 +31,7 @@ python main.py hide <img_file> <payload_file> <mode> <seed>
   - `gray`: 将信息以灰度图像的形式写入，适合存储图像内容或低分辨率文字。该方法能够保留更多的细节，便于辨认。
 - `<seed>`: 使用的随机数种子，为一个整数。在提取信息时需要输入相同的数字。
 
-### extract - 从含有隐写信息的图片中取出信息
+## extract - 从含有隐写信息的图片中取出信息
 
 ``` shell
 main.py extract <stego_file> <output_file> <mode> <seed>
@@ -37,15 +40,15 @@ main.py extract <stego_file> <output_file> <mode> <seed>
 - `<stego_file>`: 藏有隐写信息的图像文件。
 - `<output_file>`: 指定输出文件的位置和文件名。
 
-## 快速上手
+# 快速上手
 
-### 安装
+## 安装
 
 - 在终端中使用命令`git clone https://github.com/marshuni/LSB-Steganography.git `命令将代码仓库克隆到本地。
 
 - 进入仓库目录，使用命令`pip install -r requirements.txt`安装程序依赖。
 
-### 隐写
+## 隐写
 
 - 运行`python main.py hide ./Example/carrier.png ./Example/payload.txt binary 20230508`
   - 该命令可将`payload.txt`中的文字渲染成二值化的图像并隐写入载体图片中，生成名为`carrier-steg-binary.png`的图片。
@@ -53,7 +56,7 @@ main.py extract <stego_file> <output_file> <mode> <seed>
 - 运行`python main.py hide ./Example/carrier.png ./Example/payload.png gray 20230508`
   - 该命令可将payload.png图片以灰度模式隐藏入载体图片中，并生成名为`carrier-steg-gray.png`的图片。
 
-### 取出信息
+## 取出信息
 
 - 运行`python main.py extract ./Example/carrier-steg-gray.png ./Example/output-pic.png gray 20230508`
   - 该命令可将载体图像中的图片取出，并存储到`output-pic.png`这一文件中。
